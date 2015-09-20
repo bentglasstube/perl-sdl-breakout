@@ -1,0 +1,14 @@
+# Installation
+
+## Windows
+
+I recommend using Strawberry Perl, with which I was able to install SDL
+by simply doing `cpanm SDL` in a command prompt.
+
+## OSX
+
+So far, I have not been able to install SDL (the perl bindings) on OSX.
+
+## Linux
+
+Much like the Windows installation, just a `cpanm SDL` should do it.
