@@ -3,8 +3,8 @@ package Breakout::Block;
 use strict;
 use warnings;
 
-use constant WIDTH  => 40;
-use constant HEIGHT => 10;
+use constant WIDTH  => 48;
+use constant HEIGHT => 18;
 
 use constant BLOCK_NORMAL => 0;
 use constant BLOCK_GLASS  => 1;

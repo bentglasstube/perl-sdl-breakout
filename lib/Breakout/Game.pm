@@ -93,11 +93,58 @@ sub update {
   return $self->lives > 0;
 }
 
+sub SDLx::Rect::top_seg {
+  my ($self) = @_;
+  return [ $self->left, $self->top, $self->right, $self->top ];
+}
+
+sub SDLx::Rect::left_seg {
+  my ($self) = @_;
+  return [ $self->left, $self->top, $self->left, $self->bottom ];
+}
+
+sub SDLx::Rect::right_seg {
+  my ($self) = @_;
+  return [ $self->right, $self->top, $self->right, $self->bottom ];
+}
+
+sub SDLx::Rect::bottom_seg {
+  my ($self) = @_;
+  return [ $self->left, $self->bottom, $self->right, $self->bottom ];
+}
+
 sub _update_ball {
   my ($self, $step, $app) = @_;
 
-  # TODO recursively update ball path
-  $self->ball->update($step, $app);
+  while ($step > 0) {
+    my @segments = ();
+
+    my $window = SDLx::Rect->new(0, 100, $app->width, $app->height);
+
+    push @segments, $window->top_seg if $self->ball->moving_up;
+    push @segments, $window->left_seg if $self->ball->moving_left;
+    push @segments, $window->right_seg if $self->ball->moving_right;
+
+    foreach my $block ($self->blocks) {
+      push @segments, $block->rect->top_seg if $self->ball->moving_down;
+      push @segments, $block->rect->left_seg if $self->ball->moving_right;
+      push @segments, $block->rect->right_seg if $self->ball->moving_left;
+      push @segments, $block->rect->bottom_seg if $self->ball->moving_up;
+    }
+
+    push @segments, $self->paddle->rect->top_seg if $self->ball->moving_down;
+    push @segments, $self->paddle->rect->left_seg if $self->ball->moving_right;
+    push @segments, $self->paddle->rect->right_seg if $self->ball->moving_left;
+
+    if (my $collision = $self->ball->nearest_collision($step, @segments)) {
+      $self->ball->advance_motion($collision->{t} * $step);
+      $self->ball->bounce($collision->{segment});
+      $step *= 1 - $collision->{t};
+    } else {
+      $self->ball->advance_motion($step);
+      last;
+    }
+  }
 }
 
 sub draw {

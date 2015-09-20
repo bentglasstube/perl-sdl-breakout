@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use List::Util qw(min max);
+use SDLx::Rect;
 
 sub new {
   my ($class, $x) = @_;
@@ -30,12 +31,14 @@ sub update {
   $self->{x} = min($self->x, $app->width - $self->width / 2);
 }
 
+sub rect {
+  my ($self) = @_;
+  return SDLx::Rect->new( $self->x - $self->width / 2, 580, $self->width, 10 );
+}
+
 sub draw {
   my ($self, $app) = @_;
-  $app->draw_rect(
-    [ $self->x - $self->width / 2, $app->height - 20, $self->width, 10 ],
-    0x00ffd8ff,
-  );
+  $app->draw_rect($self->rect, 0x00ffd8ff);
 }
 
 sub move {
