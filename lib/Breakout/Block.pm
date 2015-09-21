@@ -34,7 +34,17 @@ sub destroyed {
   return undef;
 }
 
+sub update {
+  my ($self, $step, $app) = @_;
+}
+
 my @_colors = (0x800000ff, 0x0090ffff, 0xa0a0a0ff);
+
+sub handle_collision {
+  my ($self, $ball) = @_;
+
+  $self->{hits}++;
+}
 
 sub draw {
   my ($self, $app) = @_;

@@ -22,6 +22,11 @@ sub v_x   { return shift->{v_x} }
 sub width { return shift->{width} }
 sub speed { return shift->{speed} }
 
+sub rect {
+  my ($self) = @_;
+  return SDLx::Rect->new( $self->x - $self->width / 2, 580, $self->width, 10 );
+}
+
 sub update {
   my ($self, $step, $app) = @_;
 
@@ -31,9 +36,10 @@ sub update {
   $self->{x} = min($self->x, $app->width - $self->width / 2);
 }
 
-sub rect {
-  my ($self) = @_;
-  return SDLx::Rect->new( $self->x - $self->width / 2, 580, $self->width, 10 );
+sub handle_collision {
+  my ($self, $ball) = @_;
+
+  # nothing to do really
 }
 
 sub draw {
