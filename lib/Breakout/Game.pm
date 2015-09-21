@@ -13,9 +13,9 @@ use Breakout::Paddle;
 
 sub __load_level {
   my @blocks = ();
-  for my $y (1 .. 5) {
-    for my $x (1 .. 15) {
-      push @blocks, Breakout::Block->new(50 * $x - 40, 20 * $y + 20);
+  for my $y (0 .. 7) {
+    for my $x (0 .. 15) {
+      push @blocks, Breakout::Block->new(50 * $x, 20 * $y + 40);
     }
   }
 

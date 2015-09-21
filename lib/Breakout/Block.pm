@@ -3,8 +3,8 @@ package Breakout::Block;
 use strict;
 use warnings;
 
-use constant WIDTH  => 48;
-use constant HEIGHT => 18;
+use constant WIDTH  => 50;
+use constant HEIGHT => 20;
 
 use constant BLOCK_NORMAL => 0;
 use constant BLOCK_GLASS  => 1;
@@ -56,7 +56,9 @@ sub handle_collision {
 
 sub draw {
   my ($self, $app) = @_;
-  $app->draw_rect($self->rect, $_colors[ $self->type ]);
+
+  $app->draw_rect($self->rect, 0xffffffff);
+  $app->draw_rect($self->rect->inflate(-2, -2), $_colors[ $self->type ]);
 }
 
 1;
