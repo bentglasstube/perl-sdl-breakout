@@ -100,6 +100,17 @@ sub draw {
   my ($self, $app) = @_;
 
   $_->draw($app) foreach $self->blocks, $self->powerups, $self->paddle, $self->ball;
+
+  for (1 .. $self->lives) {
+    $app->draw_circle_filled([ 15 * $_ - 8, 7 ], 5, 0xd8ff00ff);
+  }
+
+  $app->draw_gfx_text(
+    [ $app->width - 100, 2 ],
+    0xffffffff,
+    sprintf "%09u", $self->score
+  );
+
 }
 
 sub pause {
