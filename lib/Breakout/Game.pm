@@ -88,7 +88,15 @@ sub update {
 
   $self->ball->update($step, $app, $self->paddle, $self->blocks);
 
-  $self->{blocks} = [ grep { not $_->destroyed } $self->blocks ];
+  $self->{blocks} = [ grep {
+    if ($_->destroyed) {
+      $self->{score} += $_->value;
+      undef;
+    } else {
+      1;
+    }
+  } $self->blocks ];
+
   $self->{powerups} = [ grep { not $_->destroyed } $self->powerups ];
 
   $_->update($step, $app) foreach $self->paddle, $self->blocks, $self->powerups;

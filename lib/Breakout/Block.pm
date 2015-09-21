@@ -34,6 +34,14 @@ sub destroyed {
   return undef;
 }
 
+sub value {
+  my ($self) = @_;
+
+  return 100 if $self->type == BLOCK_NORMAL;
+  return 500 if $self->type == BLOCK_GLASS;
+  return 0;
+}
+
 sub update {
   my ($self, $step, $app) = @_;
 }
