@@ -52,6 +52,8 @@ sub update {
       $self->{dir} = ($best->{dir} eq 'h' ? 3 : 2) * PI - $self->dir;
 
       $best->{object}->handle_collision($self);
+
+      $step *= 1 - $best->{t};
     } else {
       $self->{x} += $dx;
       $self->{y} += $dy;
