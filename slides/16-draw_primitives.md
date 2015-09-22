@@ -1,6 +1,7 @@
 # Drawing with primitives
 
-Primitives are basic shapes that can be drawn to the screen.  While developing the game, I used these draw functions:
+Primitives are basic shapes that can be drawn to the screen.  While
+developing the game, I used draw functions similar to these:
 
 ## Paddle
 
@@ -34,4 +35,3 @@ Primitives are basic shapes that can be drawn to the screen.  While developing t
       my ($self, $app) = @_;
       $app->draw_rect($self->rect, $_colors{$self->type});
     }
-

@@ -1,7 +1,7 @@
 # Blocks
 
-Represents the blocks in the game field that are destroyed by the ball.
-They have the following attributes:
+Represents the blocks in the game field that are destroyed by the
+ball.  They have the following attributes:
 
   * `rect` - An `SDLx::Rect` representing the position of the block
   * `type` - The block type, which controls its behavior

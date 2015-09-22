@@ -21,8 +21,8 @@
 
     my $game = Breakout::Game->new();
 
-    $app->add_event_handler(…);
-    $app->add_move_handler(…);
-    $app->add_show_handler(…);
+    $app->add_event_handler(...);
+    $app->add_move_handler(...);
+    $app->add_show_handler(...);
 
     $app->run();
