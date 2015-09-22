@@ -25,10 +25,17 @@ sub __load_level {
 sub _reset {
   my ($self) = @_;
 
-  $self->{paddle}   = Breakout::Paddle->new(400);
-  $self->{ball}     = Breakout::Ball->new(400, 575);
   $self->{blocks}   = __load_level();
   $self->{powerups} = [];
+
+  $self->_reset_ball;
+}
+
+sub _reset_ball {
+  my ($self) = @_;
+
+  $self->{ball} = Breakout::Ball->new(400, 575);
+  $self->{paddle} = Breakout::Paddle->new(400);
 }
 
 sub new {
@@ -100,6 +107,11 @@ sub update {
   $self->{powerups} = [ grep { not $_->destroyed } $self->powerups ];
 
   $_->update($step, $app) foreach $self->paddle, $self->blocks, $self->powerups;
+
+  if ($self->ball->y > $app->height + 100) {
+    $self->_reset_ball;
+    $self->{lives}--;
+  }
 
   return $self->lives > 0;
 }
