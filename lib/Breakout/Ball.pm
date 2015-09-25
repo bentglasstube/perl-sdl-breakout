@@ -5,6 +5,8 @@ use warnings;
 
 use constant PI => 3.14159265358979;
 
+use SDLx::Sprite;
+
 use Breakout::Wall;
 
 sub new {
@@ -15,7 +17,8 @@ sub new {
     y      => $y,
     dir    => 5 / 4 * PI + PI / 2 * rand,
     speed  => 0,
-    radius => 5,
+    radius => 8,
+    sprite => SDLx::Sprite->new( image => 'ball.bmp' ),
   }, $class;
 }
 
@@ -24,13 +27,14 @@ sub y      { return shift->{'y'} }
 sub dir    { return shift->{dir} }
 sub speed  { return shift->{speed} }
 sub radius { return shift->{radius} }
+sub sprite { return shift->{sprite} }
 
 sub update {
   my ($self, $step, $app, @objects) = @_;
 
-  push @objects, Breakout::Wall->new(-10, 0, 10, $app->height);
-  push @objects, Breakout::Wall->new($app->width, 0, 10, $app->height);
-  push @objects, Breakout::Wall->new(0, -10, $app->width, 10);
+  push @objects, Breakout::Wall->new(0, 0, 16, $app->height);
+  push @objects, Breakout::Wall->new($app->width - 16, 0, 16, $app->height);
+  push @objects, Breakout::Wall->new(0, 0, $app->width, 16);
 
   while ($step > 0) {
     my $dx = cos($self->dir) * $step * $self->speed;
@@ -69,7 +73,9 @@ sub update {
 
 sub draw {
   my ($self, $app) = @_;
-  $app->draw_circle_filled([ $self->x, $self->y ], $self->radius, 0xffffffff);
+  $self->sprite->x($self->x - $self->radius);
+  $self->sprite->y($self->y - $self->radius);
+  $self->sprite->draw($app);
 }
 
 sub _collide {

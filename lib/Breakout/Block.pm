@@ -4,20 +4,25 @@ use strict;
 use warnings;
 
 use SDLx::Rect;
+use SDLx::Sprite;
 
 sub new {
   my ($class, $x, $y, $value) = @_;
 
   return bless {
-    rect  => SDLx::Rect->new($x, $y, 50, 20),
-    hit   => undef,
-    value => $value,
+    hit    => undef,
+    value  => $value,
+    sprite => SDLx::Sprite->new(
+      image => "brick$value.bmp",
+      rect  => SDLx::Rect->new($x, $y, 48, 16)
+    ),
   }, $class;
 }
 
-sub rect  { return shift->{rect} }
-sub hit   { return shift->{hit} }
-sub value { return shift->{value} }
+sub hit    { return shift->{hit} }
+sub value  { return shift->{value} }
+sub sprite { return shift->{sprite} }
+sub rect   { return shift->sprite->rect }
 
 sub update {
   my ($self, $step, $app) = @_;
@@ -28,16 +33,9 @@ sub handle_collision {
   $self->{hit}++;
 }
 
-my @_colors = (
-  0xffff00ff,
-  0x00ff00ff,
-  0xff8800ff,
-  0xff0000ff,
-);
-
 sub draw {
   my ($self, $app) = @_;
-  $app->draw_rect($self->rect, $_colors[ $self->value / 2 ]);
+  $self->sprite->draw($app);
 }
 
 1;

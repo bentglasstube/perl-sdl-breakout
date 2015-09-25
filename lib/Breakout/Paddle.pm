@@ -5,26 +5,29 @@ use warnings;
 
 use List::Util qw(min max);
 use SDLx::Rect;
+use SDLx::Sprite;
 
 sub new {
   my ($class, $x) = @_;
 
   return bless {
-    x     => $x,
-    vx    => 0,
-    width => 50,
-    speed => 20,
+    x      => $x,
+    vx     => 0,
+    width  => 48,
+    speed  => 20,
+    sprite => SDLx::Sprite->new(image => 'paddle.bmp', y => 568),
   }, $class;
 }
 
-sub x     { return shift->{x} }
-sub vx    { return shift->{vx} }
-sub width { return shift->{width} }
-sub speed { return shift->{speed} }
+sub x      { return shift->{x} }
+sub vx     { return shift->{vx} }
+sub width  { return shift->{width} }
+sub speed  { return shift->{speed} }
+sub sprite { return shift->{sprite} }
 
 sub rect {
   my ($self) = @_;
-  return SDLx::Rect->new($self->x - $self->width / 2, 580, $self->width, 10);
+  return SDLx::Rect->new($self->x - $self->width / 2, 568, $self->width, 16);
 }
 
 sub update {
@@ -44,7 +47,8 @@ sub handle_collision {
 
 sub draw {
   my ($self, $app) = @_;
-  $app->draw_rect($self->rect, 0xffffffff);
+  $self->sprite->x($self->x - $self->width / 2);
+  $self->sprite->draw($app);
 }
 
 sub move {

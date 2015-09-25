@@ -52,7 +52,7 @@ $app->add_move_handler(
 $app->add_show_handler(
   sub {
     my ($delta, $app) = @_;
-    $app->draw_rect([ 0, 0, $app->w, $app->h ], 0x000000ff);
+    $app->draw_rect([ 0, 0, $app->w, $app->h ], 0x9badb7ff);
     $game->draw($app);
     $app->update();
   }

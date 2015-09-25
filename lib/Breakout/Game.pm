@@ -17,7 +17,7 @@ sub _reset_blocks {
   my @blocks = ();
   for my $y (0 .. 7) {
     for my $x (0 .. 15) {
-      push @blocks, Breakout::Block->new(50 * $x, 20 * $y + 40, 7 - 2 * (int $y / 2));
+      push @blocks, Breakout::Block->new(48 * $x + 16, 16 * $y + 48, 7 - 2 * (int $y / 2));
     }
   }
 
@@ -27,7 +27,7 @@ sub _reset_blocks {
 sub _reset_ball {
   my ($self) = @_;
 
-  $self->{ball} = Breakout::Ball->new(400, 575);
+  $self->{ball} = Breakout::Ball->new(400, 560);
   $self->paddle->{x} = 400;
 }
 
@@ -131,6 +131,7 @@ sub update {
     if ($self->lives == 0) {
       $self->_reset_blocks;
       $self->{lives} = 3;
+      $self->{score} = 0;
     }
   }
 }
@@ -140,14 +141,16 @@ sub draw {
 
   $_->draw($app) foreach $self->blocks, $self->paddle, $self->ball;
 
+  $self->ball->sprite->y(16);
   for (1 .. $self->lives) {
-    $app->draw_circle_filled([ 15 * $_ - 8, 7 ], 5, 0xffffffff);
+    $self->ball->sprite->x(16 * $_);
+    $self->ball->sprite->draw($app);
   }
 
   $app->draw_gfx_text(
-    [ $app->width - 50, 2 ],
+    [ $app->width - 64, 16 ],
     0xffffffff,
-    sprintf "%06u", $self->score
+    sprintf "%6u", $self->score
   );
 
 }
