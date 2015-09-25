@@ -7,6 +7,8 @@ use List::Util qw(min max);
 use SDLx::Rect;
 use SDLx::Sprite;
 
+use Breakout::Audio;
+
 sub new {
   my ($class, $x) = @_;
 
@@ -16,6 +18,7 @@ sub new {
     width  => 48,
     speed  => 20,
     sprite => SDLx::Sprite->new(image => 'paddle.bmp', y => 568),
+    sound  => Breakout::Audio->new(),
   }, $class;
 }
 
@@ -24,6 +27,7 @@ sub vx     { return shift->{vx} }
 sub width  { return shift->{width} }
 sub speed  { return shift->{speed} }
 sub sprite { return shift->{sprite} }
+sub sound  { return shift->{sound} }
 
 sub rect {
   my ($self) = @_;
@@ -41,8 +45,7 @@ sub update {
 
 sub handle_collision {
   my ($self, $ball) = @_;
-
-  # TODO play sound "bounce.wav"
+  $self->sound->play('bounce.wav');
 }
 
 sub draw {

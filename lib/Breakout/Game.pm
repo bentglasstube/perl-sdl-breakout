@@ -7,6 +7,7 @@ use experimental 'switch';
 
 use SDL::Event;
 
+use Breakout::Audio;
 use Breakout::Ball;
 use Breakout::Block;
 use Breakout::Paddle;
@@ -36,7 +37,7 @@ sub _launch {
 
   if ($self->ball->speed == 0) {
     $self->ball->{speed} = 20;
-    # TODO play sound launch.wav
+    $self->sound->play('launch.wav');
   }
 }
 
@@ -47,6 +48,7 @@ sub new {
     lives  => 3,
     score  => 0,
     paddle => Breakout::Paddle->new(400),
+    sound  => Breakout::Audio->new(),
   }, $class;
 
   $self->_reset_ball;
@@ -58,6 +60,7 @@ sub new {
 sub lives  { return shift->{lives} }
 sub score  { return shift->{score} }
 sub paddle { return shift->{paddle} }
+sub sound  { return shift->{sound} }
 sub ball   { return shift->{ball} }
 sub blocks { return @{ shift->{blocks} } }
 
@@ -106,9 +109,7 @@ sub update {
     if ($_->hit) {
       $self->{score} += $_->value;
       $self->ball->{speed} *= 1.01;
-
-      # TODO play sound break.wav
-
+      $self->sound->play('break.wav');
       undef;
     } else {
       1;
@@ -116,17 +117,16 @@ sub update {
   } $self->blocks ];
 
   if ($self->ball->y > $app->height / 2 and not $self->blocks) {
-    $self->_reset_blocks 
-    # TODO play sound clear.wav
+    $self->_reset_blocks;
+    $self->sound->play('clear.wav');
   }
 
   $_->update($step, $app) foreach $self->paddle, $self->blocks;
 
-  if ($self->ball->y > $app->height + 100) {
+  if ($self->ball->y > $app->height + $self->ball->radius) {
     $self->_reset_ball;
     $self->{lives}--;
-
-    # TODO play sound miss.wav
+    $self->sound->play('miss.wav');
 
     if ($self->lives == 0) {
       $self->_reset_blocks;
@@ -149,7 +149,7 @@ sub draw {
 
   $app->draw_gfx_text(
     [ $app->width - 64, 16 ],
-    0xffffffff,
+    0x000000ff,
     sprintf "%6u", $self->score
   );
 
