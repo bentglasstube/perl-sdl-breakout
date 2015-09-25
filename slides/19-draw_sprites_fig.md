@@ -6,3 +6,4 @@ Some nice sprite routines are encapsulated by `SDLx::Sprite`
 
 ![Sprites](fig5.png)
 
+Artwork by Buch - http://opengameart.org/content/arcade-pack
