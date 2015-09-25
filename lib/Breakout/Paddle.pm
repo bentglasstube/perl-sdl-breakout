@@ -39,7 +39,7 @@ sub update {
 sub handle_collision {
   my ($self, $ball) = @_;
 
-  # nothing to do really
+  # TODO play sound "bounce.wav"
 }
 
 sub draw {

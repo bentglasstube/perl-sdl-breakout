@@ -36,6 +36,7 @@ sub _launch {
 
   if ($self->ball->speed == 0) {
     $self->ball->{speed} = 20;
+    # TODO play sound launch.wav
   }
 }
 
@@ -73,7 +74,7 @@ sub key_press {
     }
 
     when (SDLK_SPACE) {
-      $self->_launch;;
+      $self->_launch;
     }
   }
 }
@@ -105,19 +106,27 @@ sub update {
     if ($_->hit) {
       $self->{score} += $_->value;
       $self->ball->{speed} *= 1.01;
+
+      # TODO play sound break.wav
+
       undef;
     } else {
       1;
     }
   } $self->blocks ];
 
-  $self->_reset_blocks if $self->ball->y > $app->height / 2 and not $self->blocks;
+  if ($self->ball->y > $app->height / 2 and not $self->blocks) {
+    $self->_reset_blocks 
+    # TODO play sound clear.wav
+  }
 
   $_->update($step, $app) foreach $self->paddle, $self->blocks;
 
   if ($self->ball->y > $app->height + 100) {
     $self->_reset_ball;
     $self->{lives}--;
+
+    # TODO play sound miss.wav
 
     if ($self->lives == 0) {
       $self->_reset_blocks;
