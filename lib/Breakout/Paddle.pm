@@ -11,26 +11,26 @@ sub new {
 
   return bless {
     x     => $x,
-    v_x   => 0,
+    vx    => 0,
     width => 50,
     speed => 20,
   }, $class;
 }
 
 sub x     { return shift->{x} }
-sub v_x   { return shift->{v_x} }
+sub vx    { return shift->{vx} }
 sub width { return shift->{width} }
 sub speed { return shift->{speed} }
 
 sub rect {
   my ($self) = @_;
-  return SDLx::Rect->new( $self->x - $self->width / 2, 580, $self->width, 10 );
+  return SDLx::Rect->new($self->x - $self->width / 2, 580, $self->width, 10);
 }
 
 sub update {
   my ($self, $step, $app) = @_;
 
-  $self->{x} += $step * $self->speed * $self->v_x;
+  $self->{x} += $step * $self->speed * $self->vx;
 
   $self->{x} = max($self->x, $self->width / 2);
   $self->{x} = min($self->x, $app->width - $self->width / 2);
@@ -49,7 +49,7 @@ sub draw {
 
 sub move {
   my ($self, $direction) = @_;
-  $self->{v_x} += $direction;
+  $self->{vx} += $direction;
 }
 
 1;
