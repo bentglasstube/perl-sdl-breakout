@@ -1,10 +1,5 @@
 # Drawing with primitives
 
-![Primitive Drawing](fig4.png)
-
-Primitives are basic shapes that can be drawn to the screen.  While
-developing the game, I used draw functions similar to these:
-
 ## Paddle
 
 A filled rectangle
@@ -35,3 +30,4 @@ Determine the color from the value.
       my ($self, $app) = @_;
       $app->draw_rect($self->rect, $_colors[ $self->value / 2 ]);
     }
+
