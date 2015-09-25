@@ -5,6 +5,7 @@ use warnings;
 
 use SDL;
 use SDL::Mixer;
+use SDL::Mixer::Music;
 use SDL::Mixer::Channels;
 use SDL::Mixer::Samples;
 
@@ -17,6 +18,12 @@ sub new {
 sub play {
   my ($self, $name) = @_;
   SDL::Mixer::Channels::play_channel(-1, $self->_load_sample($name), 0);
+}
+
+sub music {
+  my ($self, $name) = @_;
+  my $music = SDL::Mixer::Music::load_MUS($name);
+  SDL::Mixer::Music::play_music($music, -1);
 }
 
 sub _load_sample {

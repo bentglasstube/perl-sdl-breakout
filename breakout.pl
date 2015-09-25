@@ -58,5 +58,4 @@ $app->add_show_handler(
   }
 );
 
-# TODO start music
 $app->run();

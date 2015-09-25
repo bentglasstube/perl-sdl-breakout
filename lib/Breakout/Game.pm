@@ -54,6 +54,8 @@ sub new {
   $self->_reset_ball;
   $self->_reset_blocks;
 
+  $self->sound->music('music.ogg');
+
   return $self;
 }
 
