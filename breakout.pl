@@ -1,4 +1,4 @@
-﻿use strict;
+use strict;
 use warnings;
 
 use lib 'lib';
@@ -45,7 +45,7 @@ $app->add_event_handler(
 $app->add_move_handler(
   sub {
     my ($step, $app, $t) = @_;
-    $game->update($step, $app) or $app->stop;
+    $game->update($step, $app);
   }
 );
 

@@ -44,7 +44,7 @@ sub handle_collision {
 
 sub draw {
   my ($self, $app) = @_;
-  $app->draw_rect($self->rect, 0x00ffd8ff);
+  $app->draw_rect($self->rect, 0xffffffff);
 }
 
 sub move {

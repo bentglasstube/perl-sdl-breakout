@@ -11,52 +11,54 @@ use Breakout::Ball;
 use Breakout::Block;
 use Breakout::Paddle;
 
-sub __load_level {
+sub _reset_blocks {
+  my ($self) = @_;
+
   my @blocks = ();
   for my $y (0 .. 7) {
     for my $x (0 .. 15) {
-      push @blocks, Breakout::Block->new(50 * $x, 20 * $y + 40);
+      push @blocks, Breakout::Block->new(50 * $x, 20 * $y + 40, 7 - 2 * (int $y / 2));
     }
   }
 
-  return \@blocks;
-}
-
-sub _reset {
-  my ($self) = @_;
-
-  $self->{blocks}   = __load_level();
-  $self->{powerups} = [];
-
-  $self->_reset_ball;
+  $self->{blocks} = \@blocks;
 }
 
 sub _reset_ball {
   my ($self) = @_;
 
   $self->{ball} = Breakout::Ball->new(400, 575);
-  $self->{paddle} = Breakout::Paddle->new(400);
+  $self->paddle->{x} = 400;
+}
+
+sub _launch {
+  my ($self) = @_;
+
+  if ($self->ball->speed == 0) {
+    $self->ball->{speed} = 20;
+  }
 }
 
 sub new {
   my ($class) = @_;
 
   my $self = bless {
-    lives => 3,
-    score => 0,
+    lives  => 3,
+    score  => 0,
+    paddle => Breakout::Paddle->new(400),
   }, $class;
 
-  $self->_reset();
+  $self->_reset_ball;
+  $self->_reset_blocks;
 
   return $self;
 }
 
-sub lives    { return shift->{lives} }
-sub score    { return shift->{score} }
-sub paddle   { return shift->{paddle} }
-sub ball     { return shift->{ball} }
-sub blocks   { return @{ shift->{blocks} } }
-sub powerups { return @{ shift->{powerups} } }
+sub lives  { return shift->{lives} }
+sub score  { return shift->{score} }
+sub paddle { return shift->{paddle} }
+sub ball   { return shift->{ball} }
+sub blocks { return @{ shift->{blocks} } }
 
 sub key_press {
   my ($self, $key) = @_;
@@ -70,8 +72,8 @@ sub key_press {
       $self->paddle->move(1);
     }
 
-    when ([SDLK_ESCAPE]) {
-      $self->{lives} = 0;
+    when (SDLK_SPACE) {
+      $self->_launch;;
     }
   }
 }
@@ -93,42 +95,50 @@ sub key_release {
 sub update {
   my ($self, $step, $app) = @_;
 
-  $self->ball->update($step, $app, $self->paddle, $self->blocks);
+  if ($self->ball->speed) {
+    $self->ball->update($step, $app, $self->paddle, $self->blocks);
+  } else {
+    $self->ball->{x} = $self->paddle->x;
+  }
 
   $self->{blocks} = [ grep {
-    if ($_->destroyed) {
+    if ($_->hit) {
       $self->{score} += $_->value;
+      $self->ball->{speed} *= 1.01;
       undef;
     } else {
       1;
     }
   } $self->blocks ];
 
-  $self->{powerups} = [ grep { not $_->destroyed } $self->powerups ];
+  $self->_reset_blocks if $self->ball->y > $app->height / 2 and not $self->blocks;
 
-  $_->update($step, $app) foreach $self->paddle, $self->blocks, $self->powerups;
+  $_->update($step, $app) foreach $self->paddle, $self->blocks;
 
   if ($self->ball->y > $app->height + 100) {
     $self->_reset_ball;
     $self->{lives}--;
-  }
 
-  return $self->lives > 0;
+    if ($self->lives == 0) {
+      $self->_reset_blocks;
+      $self->{lives} = 3;
+    }
+  }
 }
 
 sub draw {
   my ($self, $app) = @_;
 
-  $_->draw($app) foreach $self->blocks, $self->powerups, $self->paddle, $self->ball;
+  $_->draw($app) foreach $self->blocks, $self->paddle, $self->ball;
 
   for (1 .. $self->lives) {
-    $app->draw_circle_filled([ 15 * $_ - 8, 7 ], 5, 0xd8ff00ff);
+    $app->draw_circle_filled([ 15 * $_ - 8, 7 ], 5, 0xffffffff);
   }
 
   $app->draw_gfx_text(
-    [ $app->width - 100, 2 ],
+    [ $app->width - 50, 2 ],
     0xffffffff,
-    sprintf "%09u", $self->score
+    sprintf "%06u", $self->score
   );
 
 }

@@ -14,7 +14,7 @@ sub new {
     x      => $x,
     y      => $y,
     dir    => 5 / 4 * PI + PI / 2 * rand,
-    speed  => 20,
+    speed  => 0,
     radius => 5,
   }, $class;
 }
@@ -69,16 +69,7 @@ sub update {
 
 sub draw {
   my ($self, $app) = @_;
-  $app->draw_circle_filled([ $self->x, $self->y ], $self->radius, 0xd8ff00ff);
-
-  $app->draw_line(
-    [ $self->x, $self->y ],
-    [
-      $self->x + cos($self->dir) * $self->speed,
-      $self->y + sin($self->dir) * $self->speed
-    ],
-    0xd8ff00ff
-  );
+  $app->draw_circle_filled([ $self->x, $self->y ], $self->radius, 0xffffffff);
 }
 
 sub _collide {
