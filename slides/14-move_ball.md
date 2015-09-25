@@ -1,6 +1,6 @@
 # Ball Move Handler 1
 
-![Collision diagram][fig1.png]
+![Collision diagram](fig1.png)
 
 First, find the next collision
 

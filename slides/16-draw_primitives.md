@@ -1,6 +1,6 @@
 # Drawing with primitives
 
-![Primitive Drawing][fig2.png]
+![Primitive Drawing](fig2.png)
 
 Primitives are basic shapes that can be drawn to the screen.  While
 developing the game, I used draw functions similar to these:
