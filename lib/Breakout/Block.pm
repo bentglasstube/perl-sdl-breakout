@@ -37,7 +37,6 @@ my @_colors = (
 
 sub draw {
   my ($self, $app) = @_;
-
   $app->draw_rect($self->rect, $_colors[ $self->value / 2 ]);
 }
 
