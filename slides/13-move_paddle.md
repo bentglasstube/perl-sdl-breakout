@@ -1,6 +1,6 @@
-# Move Handlers
+# Paddle Move Handlers
 
-## Paddle
+Controls the left/right motion of the paddle and checks bounds.
 
     sub update {
       my ($self, $step, $app) = @_;
@@ -10,7 +10,3 @@
       $self->{x} = max($self->x, $self->width / 2);
       $self->{x} = min($self->x, $app->width - $self->width / 2);
     }
-
-## Powerups
-
-TODO: Not yet implemented

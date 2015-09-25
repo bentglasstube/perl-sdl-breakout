@@ -12,8 +12,8 @@
           $self->paddle->move(1);
         }
 
-        when ([SDLK_ESCAPE]) {
-          $self->{lives} = 0;
+        when (SDLK_SPACE) {
+          $self->_launch;
         }
       }
     }

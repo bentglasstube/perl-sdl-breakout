@@ -8,6 +8,5 @@ Very limited game state is needed for breakout:
 Most of the complex state is encapsulated in game objects:
 
   * Paddle
+  * Ball
   * Blocks
-  * Balls
-  * Powerups
