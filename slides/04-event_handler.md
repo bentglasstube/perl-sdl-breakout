@@ -1,30 +1,23 @@
 # Event Handler
 
-Handles SDL events, including:
+Handles SDL events, from input devices and the window manager
 
-  * Keyboard events
-  * Mouse events
-  * Joystick events
-  * Focus events
-
-<pre><code>$app->add_event_handler(
-  sub {
-    my ($event, $app) = @_;
-
-    given ($event->type) {
-      when (SDL_KEYDOWN) {
-        $game->key_press($event->key_sym);
+    $app->add_event_handler(
+      sub {
+        my ($event, $app) = @_;
+        given ($event->type) {
+          when (SDL_KEYDOWN) {
+            $game->key_press($event->key_sym);
+          }
+          when (SDL_KEYUP) {
+            $game->key_release($event->key_sym);
+          }
+          when (SDL_QUIT) {
+            $app->stop;
+          }
+        }
       }
-      when (SDL_KEYUP) {
-        $game->key_release($event->key_sym);
-      }
-      when (SDL_QUIT) {
-        $app->stop;
-      }
-    }
-  }
-);
-</code></pre>
+    );
 
   * `$event` - The `SDL::Event` object
   * `$app` - The `SDLx::Controller` that received the event

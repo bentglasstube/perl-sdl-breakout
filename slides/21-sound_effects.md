@@ -6,7 +6,13 @@ very easy to use.
 
     package Breakout::Audio;
 
-    ...
+    use strict;
+    use warnings;
+
+    use SDL;
+    use SDL::Mixer;
+    use SDL::Mixer::Channels;
+    use SDL::Mixer::Samples;
 
     sub new {
       my ($class) = @_;
@@ -21,7 +27,7 @@ very easy to use.
 
     sub _load_sample {
       my ($self, $name) = @_;
-      return $self->{s}{$name} //= SDL::Mixer::Samples::load_WAV($name);
+      return $self->{samples}{$name} //= SDL::Mixer::Samples::load_WAV($name);
     }
 
     1;
