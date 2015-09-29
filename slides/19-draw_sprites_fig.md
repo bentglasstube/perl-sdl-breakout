@@ -1,6 +1,6 @@
 # Drawing with Sprites
 
-Sprites are pre-drawn 2d images that are composed to make large scenes.
+Sprites are pre-drawn 2D images that are composed to make large scenes.
 
 ![Sprites](fig5.png)
 

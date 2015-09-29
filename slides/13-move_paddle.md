@@ -1,4 +1,4 @@
-# Paddle Move Handlers
+# Paddle Move Handler
 
 Controls the left/right motion of the paddle and checks bounds.
 
