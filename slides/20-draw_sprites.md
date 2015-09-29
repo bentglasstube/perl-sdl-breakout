@@ -1,4 +1,4 @@
-# Drawing with sprites
+# Drawing with Sprites
 
 Loading the sprite:
 

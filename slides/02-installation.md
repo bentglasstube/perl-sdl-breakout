@@ -5,7 +5,7 @@
 I recommend using Strawberry Perl, with which I was able to install
 SDL by simply doing `cpanm SDL` in a command prompt.
 
-http://strawberryperl.com/
+[http://strawberryperl.com/](http://strawberryperl.com/)
 
 ## OSX
 

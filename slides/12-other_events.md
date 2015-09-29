@@ -1,4 +1,4 @@
-# Other events
+# Other Events
 
 ## SDL_ACTIVEEVENT
 

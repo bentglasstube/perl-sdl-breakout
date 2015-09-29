@@ -1,20 +1,16 @@
 # Sound Effects
 
-I couldn't use `SDLx::Sound`, so I had to use plain `SDL` functions.
+The `SDLx::Sound` package exists ostensibly to ease with sound effect
+playback, but it seems to be very early in development and it was not
+very easy to use.
 
     package Breakout::Audio;
 
-    use strict;
-    use warnings;
-
-    use SDL;
-    use SDL::Mixer;
-    use SDL::Mixer::Channels;
-    use SDL::Mixer::Samples;
+    ...
 
     sub new {
       my ($class) = @_;
-      SDL::Mixer::open_audio(44100, AUDIO_S16, 4, 1024);
+      SDL::Mixer::open_audio(44100, AUDIO_S16, 2, 1024);
       return bless {}, $class;
     }
 
