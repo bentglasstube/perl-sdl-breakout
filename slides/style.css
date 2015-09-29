@@ -23,7 +23,16 @@ body > .container {
   padding: 15px 0;
 }
 
-.jumbotron p {
+.title {
+  text-align: center;
+}
+
+.title h1 {
+  font-size: 64px;
+}
+
+.title p {
+  font-size: 21px;
   margin-top: 50px;
 }
 
