@@ -1,8 +1,7 @@
 # Sound Effects
 
-The `SDLx::Sound` package exists ostensibly to ease with sound effect
-playback, but it seems to be very early in development and it was not
-very easy to use.
+The `SDLx::Sound` package exists ostensibly to ease sound effect playback, but
+it seems to be very early in development and it was not very easy to use.
 
     package Breakout::Audio;
 
