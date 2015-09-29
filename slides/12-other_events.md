@@ -26,3 +26,6 @@ application shut down.
     when (SDL_QUIT) {
       $app->stop;
     }
+
+This handling is so common, you can invoke it just by setting
+`exit_on_quit` to a true value in `SDLx::App->new`.
