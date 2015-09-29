@@ -5,8 +5,7 @@
 Notifies the application about changes to its focus state.  There are
 various values that can be set in the `active_state` parameter:
 
- * `SDL_APPACTIVE` - Occurs when the application is
-   minimised/restored
+ * `SDL_APPACTIVE` - Occurs when the application is minimized/restored
  * `SDL_APPINPUTFOCUS` - Occurs when the application gains/loses
    keyboard input focus
  * `SDL_APPMOUSEFOCUS` - Occurs when the mouse leaves/enters the
